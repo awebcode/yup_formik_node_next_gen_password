@@ -30,19 +30,7 @@ To run the project locally, follow these steps:
 
 
 
-Technologies Used
-Frontend
-Next.js
-React
-Formik
-Yup
-Tailwind CSS
-Backend
-Node.js
-Express 
-[Other backend technologies used]
-Folder Structure
-Copy code
+
 
 
 
@@ -67,7 +55,7 @@ Visit [http://localhost:3000](http://localhost:3000) in your browser.
 ### Backend
 
 - Node.js
-- Express (if used)
+- Express 
 - [Other backend technologies used]
 
 ## Folder Structure
