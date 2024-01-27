@@ -2,12 +2,17 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-
+import { generateStrongPassword } from "./functions";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is Required"),
   name: Yup.string().required().min(4).max(8),
   age: Yup.number().required().positive().integer(),
   password: Yup.string()
+    .matches(
+      /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
+      "Password must contain at least one letter, one digit, and be at least 6 characters long"
+    )
     .min(6, "Password must be at least 6 characters")
     .required("Password Is Required"),
   confirmPassword: Yup.string()
@@ -31,10 +36,19 @@ type UserTypes = {
 
 const FormValidator = () => {
   const [error, setError] = useState<any | string>();
+  //password suggestion
+  const [suggestedPassword, setSuggestedPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const handlePasswordSuggestion = () => {
+    const newPassword = generateStrongPassword();
+    setSuggestedPassword(newPassword);
+    return newPassword;
+  };
   const initialValues: UserTypes = {
     name: "",
     email: "",
-    password: "",
+    password: suggestedPassword,
     confirmPassword: "",
     age: 0,
     category: "",
@@ -63,7 +77,7 @@ const FormValidator = () => {
 
     setSubmitting(false);
   };
-  console.log("x", error);
+
   return (
     <Formik
       initialValues={initialValues}
@@ -71,7 +85,7 @@ const FormValidator = () => {
       onSubmit={handleSubmit}
       className="min-h-screen flex items-center justify-center my-20"
     >
-      {({ isSubmitting, touched, errors, handleBlur }) => (
+      {({ isSubmitting, touched, errors, handleBlur, setFieldValue }) => (
         <Form className="max-w-sm mx-auto mt-8 bg-white py-8 px-8 rounded-lg border-teal-400 my-20 shadow-md border hover:border-violet-500 duration-300">
           <h1 className="text-gray-700 text-2xl text-center my-4">Validation Form</h1>
           {error && <h1 className="text-red-500 text-xl bold">{error}</h1>}
@@ -177,49 +191,92 @@ const FormValidator = () => {
           </div>
 
           {/* password */}
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Password
             </label>
-            <Field
-              placeholder="Password"
-              onBlur={handleBlur}
-              type="password"
-              id="password"
-              name="password"
-              className={`mt-1 p-3 border outline-none rounded-md w-full text-black ${
-                touched.password && errors.password
-                  ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                  : "border-gray-300 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-200"
-              }`}
-            />
+            <div className="relative">
+              <Field
+                placeholder="Password"
+                onBlur={handleBlur}
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                className={`mt-1 p-3 border outline-none rounded-md w-full text-black ${
+                  touched.password && errors.password
+                    ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                    : "border-gray-300 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-200"
+                }`}
+              />
+              <span
+                className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <IoMdEyeOff className="text-gray-700 text-2xl" />
+                ) : (
+                  <IoMdEye className="text-gray-700 text-2xl" />
+                )}
+              </span>
+            </div>
             <ErrorMessage
               name="password"
               component="div"
               className="text-red-500 text-sm mt-2"
             />
+
+            {/* Suggested Password */}
+            <div className="my-2">
+              <button
+                type="button"
+                className="text-blue-500 underline cursor-pointer"
+                onClick={() => {
+                  const newPassword = handlePasswordSuggestion();
+                  setFieldValue("password", newPassword);
+                }}
+              >
+                Generate Strong Password
+              </button>
+              {suggestedPassword && (
+                <div className="text-gray-500 text-sm mt-2">
+                  Suggested Password: {suggestedPassword}
+                </div>
+              )}
+            </div>
           </div>
           {/* Confirm Password */}
           {/* password */}
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label
               htmlFor="confirmPassword"
               className="block text-sm font-medium text-gray-700"
             >
               Confirm Password
             </label>
-            <Field
-              placeholder="Confirm Password"
-              onBlur={handleBlur}
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              className={`mt-1 p-3 border outline-none rounded-md w-full text-black ${
-                touched.confirmPassword && errors.confirmPassword
-                  ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                  : "border-gray-300 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-200"
-              }`}
-            />
+            <div className="relative">
+              <Field
+                placeholder="Confirm Password"
+                onBlur={handleBlur}
+                type={showConfirmPassword ? "text" : "password"}
+                id="confirmPassword"
+                name="confirmPassword"
+                className={`mt-1 p-3 border outline-none rounded-md w-full text-black ${
+                  touched.confirmPassword && errors.confirmPassword
+                    ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                    : "border-gray-300 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-200"
+                }`}
+              />
+              <span
+                className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? (
+                  <IoMdEyeOff className="text-gray-700 text-2xl" />
+                ) : (
+                  <IoMdEye className="text-gray-700 text-2xl" />
+                )}
+              </span>
+            </div>
             <ErrorMessage
               name="confirmPassword"
               component="div"
