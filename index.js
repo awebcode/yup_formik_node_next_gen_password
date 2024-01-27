@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors"
-import { validationMiddleware } from "./validateMiddleware.js";
-import { registerSchema } from "./validateSchema.js";
-import { CustomErrorHandler, errorHandler, notfoundHandler } from "./errorHandler.js";
+import { validationMiddleware } from "./middlewares/validateMiddleware.js";
+import { registerSchema } from "./validation/validateSchema.js";
+import { CustomErrorHandler, errorHandler, notfoundHandler } from "./utils/errorHandler.js";
 import bodyParser from "body-parser";
 const app = express();
 app.use(cors({ origin: "*" }));
