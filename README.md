@@ -25,6 +25,7 @@ To run the project locally, follow these steps:
 2. cd yup_formik_node_next_gen_password
 
 3. npm install
+
 4. npm run dev
 
 
@@ -50,20 +51,32 @@ Copy code
 
 
 
-Folder Structure
-Copy code
+
+Visit [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Technologies Used
+
+### Frontend
+
+- Next.js
+- React
+- Formik
+- Yup
+- Tailwind CSS
+
+### Backend
+
+- Node.js
+- Express (if used)
+- [Other backend technologies used]
+
+## Folder Structure
+
 .
 ├── client
 │   ├── components
-│   │   ├── Component1.js
-│   │   ├── Component2.js
-│   │   └── ...
 │   ├── pages
-│   │   ├── index.js
-│   │   ├── about.js
-│   │   └── ...
 │   └── ...
-
 ├── server
 │   ├── middlewares
 │   │   ├── authentication.js
@@ -80,27 +93,24 @@ Copy code
 
 └── ...
 
+## Contributing
 
-
-
-
-
-
-
-
-Contributing
 If you'd like to contribute to this project, follow these steps:
 
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature/new-feature`
+3. Make your changes and commit them: `git commit -m 'Add new feature'`
+4. Push to the branch: `git push origin feature/new-feature`
+5. Submit a pull request.
 
-Fork the repository.
-Create a new branch: git checkout -b feature/new-feature
-Make your changes and commit them: git commit -m 'Add new feature'
-Push to the branch: git push origin feature/new-feature
-Submit a pull request.
-License
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Acknowledgments
+
+-
+
+---
 
 
-
-
-
-This project is licensed under the MIT License - see the LICENSE.md file for details.
