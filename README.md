@@ -45,15 +45,29 @@ Copy code
 .
 ├── client
 │   ├── components
-│   ├── pages
+│   │   ├── Component1.tsx
+│   │   ├── Component2.tsx
+│   │   └── ...
+│   ├── app
+│   │   ├── index.tsx
+│   │   ├── about.tsx
+│   │   └── ...
 │   └── ...
 ├── server
 │   ├── middlewares
+│   │   ├── authentication.ts
+│   │   ├── logging.ts
+│   │   └── ...
 │   ├── routes
-    ├── controllers
-│   └── index
-     └──...
+│   │   ├── api.ts
+│   │   └── web.ts
+│   ├── controllers
+│   │   ├── UserController.ts
+│   │   ├── PasswordController.ts
+│   │   └── ...
+│   └── index.ts
 └── ...
+
 Contributing
 If you'd like to contribute to this project, follow these steps:
 
