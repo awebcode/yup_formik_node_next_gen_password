@@ -1,6 +1,6 @@
 # Yup, Formik, Node.js, Next.js Password Generation and Validation
 
-![Yup & formik Form Validation in Next js](<Asikur Rahman>)
+![Yup & formik Form Validation in Next js](<Asikur Rahman -Full-stack Web Developer>)
 
 ## Overview
 
@@ -25,7 +25,7 @@ To run the project locally, follow these steps:
 2. cd yup_formik_node_next_gen_password
 
 3. npm install
-4.npm run dev
+4. npm run dev
 
 
 
@@ -38,38 +38,59 @@ Yup
 Tailwind CSS
 Backend
 Node.js
-Express (if used)
+Express 
 [Other backend technologies used]
+Folder Structure
+Copy code
+
+
+
+
+
+
+
+
 Folder Structure
 Copy code
 .
 ├── client
 │   ├── components
-│   │   ├── Component1.tsx
-│   │   ├── Component2.tsx
+│   │   ├── Component1.js
+│   │   ├── Component2.js
 │   │   └── ...
-│   ├── app
-│   │   ├── index.tsx
-│   │   ├── about.tsx
+│   ├── pages
+│   │   ├── index.js
+│   │   ├── about.js
 │   │   └── ...
 │   └── ...
+
 ├── server
 │   ├── middlewares
-│   │   ├── authentication.ts
-│   │   ├── logging.ts
+│   │   ├── authentication.js
+│   │   ├── logging.js
 │   │   └── ...
 │   ├── routes
-│   │   ├── api.ts
-│   │   └── web.ts
+│   │   ├── api.js
+│   │   └── web.js
 │   ├── controllers
-│   │   ├── UserController.ts
-│   │   ├── PasswordController.ts
+│   │   ├── UserController.js
+│   │   ├── PasswordController.js
 │   │   └── ...
-│   └── index.ts
+│   └── index.js
+
 └── ...
+
+
+
+
+
+
+
+
 
 Contributing
 If you'd like to contribute to this project, follow these steps:
+
 
 Fork the repository.
 Create a new branch: git checkout -b feature/new-feature
@@ -77,5 +98,9 @@ Make your changes and commit them: git commit -m 'Add new feature'
 Push to the branch: git push origin feature/new-feature
 Submit a pull request.
 License
+
+
+
+
 
 This project is licensed under the MIT License - see the LICENSE.md file for details.
