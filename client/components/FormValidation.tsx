@@ -6,10 +6,17 @@ import * as Yup from "yup";
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is Required"),
   name: Yup.string().required().min(4).max(8),
-  age: Yup.number().required(),
+  age: Yup.number().required().positive().integer(),
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")
     .required("Password Is Required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password")], "Passwords must match")
+    .required("Confirm Password is Required"),
+  rememberMe: Yup.boolean().oneOf([true], "Please accept the terms"),
+  category: Yup.string()
+    .oneOf(["admin", "user", "sub-admin"], "Invalid category")
+    .required("Category is Required"),
 });
 
 type UserTypes = {
@@ -17,6 +24,9 @@ type UserTypes = {
   email: string;
   age: number;
   password: string;
+  confirmPassword: string;
+  rememberMe: boolean;
+  category: string;
 };
 
 const FormValidator = () => {
@@ -25,7 +35,10 @@ const FormValidator = () => {
     name: "",
     email: "",
     password: "",
+    confirmPassword: "",
     age: 0,
+    category: "",
+    rememberMe: false,
   };
 
   const handleSubmit = async (values: UserTypes, { setSubmitting }: any) => {
@@ -56,12 +69,12 @@ const FormValidator = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
-      className="min-h-screen flex items-center justify-center"
+      className="min-h-screen flex items-center justify-center my-20"
     >
       {({ isSubmitting, touched, errors, handleBlur }) => (
-        <Form className="max-w-sm mx-auto mt-8 bg-white py-8 px-6 rounded-lg shadow-md ">
+        <Form className="max-w-sm mx-auto mt-8 bg-white py-8 px-8 rounded-lg border-teal-400 my-20 shadow-md border hover:border-violet-500 duration-300">
           <h1 className="text-gray-700 text-2xl text-center my-4">Validation Form</h1>
-                  {error && <h1 className="text-red-500 text-xl bold">{error}</h1>}
+          {error && <h1 className="text-red-500 text-xl bold">{error}</h1>}
           {/* name */}
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
@@ -134,6 +147,35 @@ const FormValidator = () => {
               className="text-red-500 text-sm mt-2"
             />
           </div>
+          {/* Category */}
+          <div className="mb-4">
+            <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+              Category
+            </label>
+            <Field
+              as="select"
+              id="category"
+              name="category"
+              onBlur={handleBlur}
+              className={`mt-1 p-2 outline-none rounded-md w-full text-black ${
+                touched.category && errors.category
+                  ? "border border-red-500 focus:ring-red-500 focus:border-red-500"
+                  : "border border-gray-300 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-200"
+              }`}
+            >
+              <option value="" label="Select Category" />
+              <option value="admin" label="Admin" />
+              <option value="user" label="User" />
+              <option value="sub-admin" label="Sub Admin" />
+              <option value="Not Valid" label="Unknown" />
+            </Field>
+            <ErrorMessage
+              name="category"
+              component="div"
+              className="text-red-500 text-sm mt-2"
+            />
+          </div>
+
           {/* password */}
           <div className="mb-4">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
@@ -155,6 +197,62 @@ const FormValidator = () => {
               name="password"
               component="div"
               className="text-red-500 text-sm mt-2"
+            />
+          </div>
+          {/* Confirm Password */}
+          {/* password */}
+          <div className="mb-4">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Confirm Password
+            </label>
+            <Field
+              placeholder="Confirm Password"
+              onBlur={handleBlur}
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              className={`mt-1 p-3 border outline-none rounded-md w-full text-black ${
+                touched.confirmPassword && errors.confirmPassword
+                  ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                  : "border-gray-300 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-200"
+              }`}
+            />
+            <ErrorMessage
+              name="confirmPassword"
+              component="div"
+              className="text-red-500 text-sm mt-2"
+            />
+          </div>
+          {/* Remember Me */}
+          <div className="mb-4 flex flex-col  justify-start">
+            <div>
+              {" "}
+              <Field
+                type="checkbox"
+                id="rememberMe"
+                name="rememberMe"
+                className={`mr-2 outline-none   rounded w-4 h-4   checked:bg-blue-500 checked:border-transparent focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 ${
+                  touched.rememberMe && errors.rememberMe
+                    ? "ring-1 offset-none rounded-md outline-none border-none ring-red-500"
+                    : ""
+                }`}
+              />
+              <label
+                htmlFor="rememberMe"
+                className={`text-sm text-gray-700 ${
+                  touched.rememberMe && errors.rememberMe ? "text-red-500" : ""
+                }`}
+              >
+                Remember Me
+              </label>
+            </div>
+            <ErrorMessage
+              name="rememberMe"
+              component="div"
+              className="text-red-500 text-sm mt-2 block"
             />
           </div>
 
